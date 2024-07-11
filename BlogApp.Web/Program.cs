@@ -1,5 +1,7 @@
 using BlogApp.Web.Data_Access;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using BlogApp.Web.Models;
 
 namespace BlogApp.Web
 {
@@ -16,6 +18,8 @@ namespace BlogApp.Web
             {
                 options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
             });
+
+            builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDbContext>();
 
             var app = builder.Build();
 
