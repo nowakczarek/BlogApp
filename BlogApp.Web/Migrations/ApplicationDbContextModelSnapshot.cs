@@ -22,7 +22,7 @@ namespace BlogApp.Web.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("BlogApp.Web.Models.User", b =>
+            modelBuilder.Entity("BlogApp.Web.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -106,6 +106,10 @@ namespace BlogApp.Web.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ApplicationUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Contents")
                         .IsRequired()
                         .HasMaxLength(1000)
@@ -114,13 +118,9 @@ namespace BlogApp.Web.Migrations
                     b.Property<DateTime>("DateTimeOfPost")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("ApplicationUserId");
 
                     b.ToTable("WebPosts");
                 });
@@ -150,6 +150,20 @@ namespace BlogApp.Web.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "e0f4a1a4-58e2-4a4b-bbda-154d271b3036",
+                            Name = "admin",
+                            NormalizedName = "admin"
+                        },
+                        new
+                        {
+                            Id = "d524fb58-3646-46a4-ab9a-705d09b9f028",
+                            Name = "client",
+                            NormalizedName = "client"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -260,9 +274,9 @@ namespace BlogApp.Web.Migrations
 
             modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
                 {
-                    b.HasOne("BlogApp.Web.Models.User", null)
+                    b.HasOne("BlogApp.Web.Models.ApplicationUser", null)
                         .WithMany("WebPosts")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -278,7 +292,7 @@ namespace BlogApp.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("BlogApp.Web.Models.User", null)
+                    b.HasOne("BlogApp.Web.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -287,7 +301,7 @@ namespace BlogApp.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("BlogApp.Web.Models.User", null)
+                    b.HasOne("BlogApp.Web.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -302,7 +316,7 @@ namespace BlogApp.Web.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BlogApp.Web.Models.User", null)
+                    b.HasOne("BlogApp.Web.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -311,14 +325,14 @@ namespace BlogApp.Web.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("BlogApp.Web.Models.User", null)
+                    b.HasOne("BlogApp.Web.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("BlogApp.Web.Models.User", b =>
+            modelBuilder.Entity("BlogApp.Web.Models.ApplicationUser", b =>
                 {
                     b.Navigation("WebPosts");
                 });

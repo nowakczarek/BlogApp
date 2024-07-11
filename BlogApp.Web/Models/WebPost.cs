@@ -14,6 +14,6 @@ namespace BlogApp.Web.Models
         [Required]
         public DateTime DateTimeOfPost { get; set; }
         [Required]
-        public string UserId { get; set; }
+        public string ApplicationUserId { get; set; }
     }
 }
