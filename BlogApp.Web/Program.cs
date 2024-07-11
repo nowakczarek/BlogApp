@@ -1,3 +1,6 @@
+using BlogApp.Web.Data_Access;
+using Microsoft.EntityFrameworkCore;
+
 namespace BlogApp.Web
 {
     public class Program
@@ -8,6 +11,11 @@ namespace BlogApp.Web
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Default"));
+            });
 
             var app = builder.Build();
 
