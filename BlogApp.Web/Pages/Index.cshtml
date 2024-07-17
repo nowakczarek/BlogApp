@@ -1,10 +1,56 @@
-﻿@page
+﻿
+@page
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@using Microsoft.AspNetCore.Identity
+@using BlogApp.Web.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <form method ="post">
+        <div class="form-group">
+            <label asp-for="WebPost.Contents"></label>
+            <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
+            <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Add Post</button>
+    </form>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Contents</th>
+                <th>Posted By</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var post in Model.WebPosts)
+            {
+                <tr>
+                    <td>@post.Contents</td>
+                    <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
+                    <td>@post.DateTimeOfPost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+else
+{
+    <div class="text-center">
+        <h3>You need to log in to see the contents</h3>
+        <p><a asp-area="Identity" asp-page="Account/Register">Register</a><p />
+        <p><a asp-area="Identity" asp-page="Account/Login">Log in</a><p />
+    </div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

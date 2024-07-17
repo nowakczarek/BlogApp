@@ -1,20 +1,69 @@
+using BlogApp.Web.Data_Access;
+using BlogApp.Web.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 
 namespace BlogApp.Web.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        //private readonly ILogger<IndexModel> _logger;
+
+        //public IndexModel(ILogger<IndexModel> logger)
+        //{
+        //    _logger = logger;
+        //}
+
+        public IndexModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
-            _logger = logger;
+            _context = context;
+            _userManager = userManager;
         }
 
-        public void OnGet()
+        public List<WebPost> WebPosts { get; set; }
+
+        [BindProperty]
+        public WebPost WebPost { get; set; }
+
+        public async Task<IActionResult> OnPostAsync()
         {
 
+            var user = await _userManager.GetUserAsync(User);
+            WebPost.ApplicationUserId = user.Id;
+
+            //WebPosts = await _context.WebPosts
+            //  .Include(p => p.ApplicationUser)
+            //  .ToListAsync();
+    
+            _context.WebPosts.Add(WebPost);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage("/Index");
         }
+
+        public async Task OnGetAsync()
+        {
+            //var user = new ApplicationUser()
+            //{
+            //    WebPosts.
+            //};
+
+            WebPosts = await _context.WebPosts
+            .Include(p => p.ApplicationUser)
+            .ToListAsync();
+        }
+
+        //user.WebPosts
+        //User = _context.Users.Include
+        //(wp => wp.WebPosts)
+        //.ToList();
+
     }
+
+    
 }

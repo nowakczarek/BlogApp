@@ -12,8 +12,11 @@ namespace BlogApp.Web.Models
         [StringLength(1000)]
         public string Contents { get; set; }
         [Required]
-        public DateTime DateTimeOfPost { get; set; }
-        [Required]
+        public DateTime DateTimeOfPost { get; set; } = DateTime.Now;
+
+        [ForeignKey("ApplicationUser")]
         public string ApplicationUserId { get; set; }
+        [Required]
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
