@@ -12,9 +12,6 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    if (User.IsInRole("admin"))
-    {
-    <h1>admin</h1>
     <form method ="post">
         <div class="form-group">
             <p>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</p>
@@ -34,50 +31,44 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var post in Model.WebPosts)
+            @if (User.IsInRole("admin"))
             {
-                <tr>
-                    <td>@post.Contents</td>
-                    <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
-                    <td>@post.DateTimeOfPost</td>
-                </tr>
-            }
-        </tbody>
-        </table>
-        
-    }
-    else
-    {
-        <form method="post">
-            <div class="form-group">
-                <p>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</p>
-                <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
-                <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary">Add Post</button>
-        </form>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Contents</th>
-                    <th>Posted By</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
                 @foreach (var post in Model.WebPosts)
                 {
                     <tr>
                         <td>@post.Contents</td>
                         <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
                         <td>@post.DateTimeOfPost</td>
+                        <td>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 }
-            </tbody>
+            }
+            else
+            {
+                @foreach (var post in Model.WebPosts)
+                {
+                    <tr>
+                        <td>@post.Contents</td>
+                        <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
+                        <td>@post.DateTimeOfPost</td>
+                        @if (post.ApplicationUserId == Model.CurrentUser.Id) 
+                        {
+                            <td>
+                                <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
         </table>
-    }
+        
 }
 else
 {

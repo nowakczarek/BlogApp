@@ -34,18 +34,28 @@ namespace BlogApp.Web.Pages
             _context.WebPosts.Add(WebPost);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Index");
+            return RedirectToPage();
         }
 
         public async Task OnGetAsync()
         {
             WebPosts = await _context.WebPosts
-            .Include(p => p.ApplicationUser)
+            .Include(wp => wp.ApplicationUser)
+            .OrderByDescending(wp => wp.DateTimeOfPost)
             .ToListAsync();
 
             CurrentUser = await _userManager.GetUserAsync(User);
         }
 
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            var post = await _context.WebPosts.FindAsync(id);
+
+            _context.WebPosts.Remove(post);
+            _context.SaveChanges();
+
+            return RedirectToPage();
+        }
     }
 
     
