@@ -14,10 +14,11 @@
 {
     <form method ="post">
         <div class="form-group">
-            <label asp-for="WebPost.Contents"></label>
+            <p>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</p>
             <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
             <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
         </div>
+        <br />
         <button type="submit" class="btn btn-primary">Add Post</button>
     </form>
 

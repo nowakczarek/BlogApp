@@ -12,13 +12,6 @@ namespace BlogApp.Web.Pages
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        //private readonly ILogger<IndexModel> _logger;
-
-        //public IndexModel(ILogger<IndexModel> logger)
-        //{
-        //    _logger = logger;
-        //}
-
         public IndexModel(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
@@ -29,6 +22,8 @@ namespace BlogApp.Web.Pages
 
         [BindProperty]
         public WebPost WebPost { get; set; }
+
+        public ApplicationUser CurrentUser { get; set; }
 
         public async Task<IActionResult> OnPostAsync()
         {
@@ -47,6 +42,8 @@ namespace BlogApp.Web.Pages
             WebPosts = await _context.WebPosts
             .Include(p => p.ApplicationUser)
             .ToListAsync();
+
+            CurrentUser = await _userManager.GetUserAsync(User);
         }
 
     }
