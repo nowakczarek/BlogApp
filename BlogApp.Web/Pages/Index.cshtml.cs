@@ -36,10 +36,6 @@ namespace BlogApp.Web.Pages
             var user = await _userManager.GetUserAsync(User);
             WebPost.ApplicationUserId = user.Id;
 
-            //WebPosts = await _context.WebPosts
-            //  .Include(p => p.ApplicationUser)
-            //  .ToListAsync();
-    
             _context.WebPosts.Add(WebPost);
             await _context.SaveChangesAsync();
 
@@ -48,20 +44,10 @@ namespace BlogApp.Web.Pages
 
         public async Task OnGetAsync()
         {
-            //var user = new ApplicationUser()
-            //{
-            //    WebPosts.
-            //};
-
             WebPosts = await _context.WebPosts
             .Include(p => p.ApplicationUser)
             .ToListAsync();
         }
-
-        //user.WebPosts
-        //User = _context.Users.Include
-        //(wp => wp.WebPosts)
-        //.ToList();
 
     }
 
