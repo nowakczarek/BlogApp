@@ -7,4 +7,4 @@ I've also used Identity for the login functionality.
 - Only logged in users can see the posts
 - Role-based accounts (admin and client) that have different functionality - Admin can delete all posts, the client only his own
 - Registration (new account is selected as a client) and Logging
-  
+- Updating Posts
