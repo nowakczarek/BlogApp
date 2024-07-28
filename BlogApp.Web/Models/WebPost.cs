@@ -18,5 +18,6 @@ namespace BlogApp.Web.Models
         public string ApplicationUserId { get; set; }
         [Required]
         public ApplicationUser ApplicationUser { get; set; }
+        public List<WebPostChangesHistory> WebPostsChangeHistory { get; set; } = new List<WebPostChangesHistory>();
     }
 }
