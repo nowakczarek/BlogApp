@@ -37,7 +37,7 @@ namespace BlogApp.Web.Pages
             return RedirectToPage();
         }
 
-        public async Task OnGetAsync()
+        public async Task OnGet()
         {
             WebPosts = await _context.WebPosts
             .Include(wp => wp.ApplicationUser)

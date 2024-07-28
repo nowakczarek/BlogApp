@@ -2,3 +2,21 @@
 @model BlogApp.Web.Pages.EditHistoryModel
 @{
 }
+
+<table class="table">
+    <thead>
+        <tr>
+            <td>Contents</td>
+            <td>Date</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var post in Model.ChangesHistory)
+        {
+            <tr>
+                <td>@post.Contents</td>
+                <td>@post.DateTimeOfPost</td>
+            </tr>
+        }
+    </tbody>
+</table>
