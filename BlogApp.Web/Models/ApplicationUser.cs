@@ -10,7 +10,7 @@ namespace BlogApp.Web.Models
         [Required]
         public string LastName { get; set; }
         [Required]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public List<WebPost> WebPosts { get; set; } = new List<WebPost>();
     }
 }
