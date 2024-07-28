@@ -13,7 +13,7 @@ namespace BlogApp.Web.Data_Access
         }
 
         public DbSet<WebPost> WebPosts { get; set; }
-
+        public DbSet<WebPostChangesHistory> WebPostsChangesHistory { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
