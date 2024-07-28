@@ -27,7 +27,16 @@ namespace BlogApp.Web.Pages
         {
             var post = await _context.WebPosts.FindAsync(id);
 
+            var changesHistory = new WebPostChangesHistory();
+
+            changesHistory.WebPostId = post.Id;
+            changesHistory.Contents = post.Contents;
+            changesHistory.DateTimeOfPost = post.DateTimeOfPost;
+
+            _context.WebPostsChangesHistory.Add(changesHistory);
+
             post.Contents = WebPost.Contents;
+            post.DateTimeOfPost = DateTime.Now;
 
             await _context.SaveChangesAsync();
 

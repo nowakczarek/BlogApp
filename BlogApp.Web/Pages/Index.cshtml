@@ -40,16 +40,16 @@
                         <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
                         <td>@post.DateTimeOfPost</td>
                         <td>
-                            <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
+                            <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
                         @if(post.ApplicationUserId == Model.CurrentUser.Id)
                         {
-                            <td>
-                                <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Update</a>
-                            </td>
+                            <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
                         }
+                        
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 }
             }
@@ -61,17 +61,16 @@
                         <td>@post.Contents</td>
                         <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
                         <td>@post.DateTimeOfPost</td>
+                        <td>
+                            <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
                         @if (post.ApplicationUserId == Model.CurrentUser.Id) 
                         {
-                            <td>
+                                <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
                                 <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
-                            </td>
-                            <td>
-                                <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Update</a>
-                            </td>
                         }
+                        </td>
                     </tr>
                 }
             }
