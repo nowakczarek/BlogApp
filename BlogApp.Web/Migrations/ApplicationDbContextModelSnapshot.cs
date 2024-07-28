@@ -96,6 +96,46 @@ namespace BlogApp.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f9da3636-ea1a-455c-bbf9-561eb4f65917",
+                            CreatedAt = new DateTime(2024, 7, 28, 19, 28, 54, 364, DateTimeKind.Local).AddTicks(3286),
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGcgqukCduKUaYlqFm+o1Vw6Mj/di0D6GtylXzrjtZV/g08YxVIPTE4Yhi53PEIkXw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a6735253-cb81-40fc-bcac-c73ea3fc1fd1",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bd5ae370-9832-4b85-849f-ceb8fed230e0",
+                            CreatedAt = new DateTime(2024, 7, 28, 19, 28, 54, 434, DateTimeKind.Local).AddTicks(8164),
+                            Email = "client@client.com",
+                            EmailConfirmed = true,
+                            FirstName = "Client",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CLIENT@CLIENT.com",
+                            NormalizedUserName = "CLIENT@CLIENT.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPeuGb/CR4QtwwZU4uaGGwaslwvyMIY+2epCSfW2uJyjFkbcLnMy+zXVTQ9oRfLC7w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "80ae2dfc-9ddd-45c1-a389-61473534cd06",
+                            TwoFactorEnabled = false,
+                            UserName = "client@client.com"
+                        });
                 });
 
             modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
@@ -154,13 +194,13 @@ namespace BlogApp.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f4e6b663-c680-4930-95b3-e5d77f92c2b5",
+                            Id = "629b03c6-414b-45be-a30e-fdacb5510cf1",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "a55a9b26-e91f-4c9d-a21c-54eb82266278",
+                            Id = "d59fa1fb-d658-413d-b81e-5ae9c73fea47",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -253,6 +293,18 @@ namespace BlogApp.Web.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "629b03c6-414b-45be-a30e-fdacb5510cf1"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "d59fa1fb-d658-413d-b81e-5ae9c73fea47"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

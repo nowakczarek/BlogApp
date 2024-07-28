@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace BlogApp.Web.Migrations
 {
     /// <inheritdoc />
@@ -99,8 +101,8 @@ namespace BlogApp.Web.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
@@ -144,8 +146,8 @@ namespace BlogApp.Web.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -178,6 +180,33 @@ namespace BlogApp.Web.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { "629b03c6-414b-45be-a30e-fdacb5510cf1", null, "admin", "admin" },
+                    { "d59fa1fb-d658-413d-b81e-5ae9c73fea47", null, "client", "client" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUsers",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { "1", 0, "f9da3636-ea1a-455c-bbf9-561eb4f65917", new DateTime(2024, 7, 28, 19, 28, 54, 364, DateTimeKind.Local).AddTicks(3286), "admin@admin.com", true, "Admin", "User", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEGcgqukCduKUaYlqFm+o1Vw6Mj/di0D6GtylXzrjtZV/g08YxVIPTE4Yhi53PEIkXw==", null, false, "a6735253-cb81-40fc-bcac-c73ea3fc1fd1", false, "admin@admin.com" },
+                    { "2", 0, "bd5ae370-9832-4b85-849f-ceb8fed230e0", new DateTime(2024, 7, 28, 19, 28, 54, 434, DateTimeKind.Local).AddTicks(8164), "client@client.com", true, "Client", "User", false, null, "CLIENT@CLIENT.com", "CLIENT@CLIENT.COM", "AQAAAAIAAYagAAAAEPeuGb/CR4QtwwZU4uaGGwaslwvyMIY+2epCSfW2uJyjFkbcLnMy+zXVTQ9oRfLC7w==", null, false, "80ae2dfc-9ddd-45c1-a389-61473534cd06", false, "client@client.com" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { "629b03c6-414b-45be-a30e-fdacb5510cf1", "1" },
+                    { "d59fa1fb-d658-413d-b81e-5ae9c73fea47", "2" }
                 });
 
             migrationBuilder.CreateIndex(

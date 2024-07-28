@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogApp.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240711151549_AddedUserRoles")]
-    partial class AddedUserRoles
+    [Migration("20240728172855_Add-Migration SetupDatabase")]
+    partial class SetupDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,6 +99,46 @@ namespace BlogApp.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f9da3636-ea1a-455c-bbf9-561eb4f65917",
+                            CreatedAt = new DateTime(2024, 7, 28, 19, 28, 54, 364, DateTimeKind.Local).AddTicks(3286),
+                            Email = "admin@admin.com",
+                            EmailConfirmed = true,
+                            FirstName = "Admin",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN@ADMIN.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEGcgqukCduKUaYlqFm+o1Vw6Mj/di0D6GtylXzrjtZV/g08YxVIPTE4Yhi53PEIkXw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a6735253-cb81-40fc-bcac-c73ea3fc1fd1",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@admin.com"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "bd5ae370-9832-4b85-849f-ceb8fed230e0",
+                            CreatedAt = new DateTime(2024, 7, 28, 19, 28, 54, 434, DateTimeKind.Local).AddTicks(8164),
+                            Email = "client@client.com",
+                            EmailConfirmed = true,
+                            FirstName = "Client",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "CLIENT@CLIENT.com",
+                            NormalizedUserName = "CLIENT@CLIENT.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPeuGb/CR4QtwwZU4uaGGwaslwvyMIY+2epCSfW2uJyjFkbcLnMy+zXVTQ9oRfLC7w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "80ae2dfc-9ddd-45c1-a389-61473534cd06",
+                            TwoFactorEnabled = false,
+                            UserName = "client@client.com"
+                        });
                 });
 
             modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
@@ -157,13 +197,13 @@ namespace BlogApp.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e0f4a1a4-58e2-4a4b-bbda-154d271b3036",
+                            Id = "629b03c6-414b-45be-a30e-fdacb5510cf1",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "d524fb58-3646-46a4-ab9a-705d09b9f028",
+                            Id = "d59fa1fb-d658-413d-b81e-5ae9c73fea47",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -222,10 +262,12 @@ namespace BlogApp.Web.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -254,6 +296,18 @@ namespace BlogApp.Web.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "629b03c6-414b-45be-a30e-fdacb5510cf1"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "d59fa1fb-d658-413d-b81e-5ae9c73fea47"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -262,10 +316,12 @@ namespace BlogApp.Web.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -277,11 +333,13 @@ namespace BlogApp.Web.Migrations
 
             modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
                 {
-                    b.HasOne("BlogApp.Web.Models.ApplicationUser", null)
+                    b.HasOne("BlogApp.Web.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("WebPosts")
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
