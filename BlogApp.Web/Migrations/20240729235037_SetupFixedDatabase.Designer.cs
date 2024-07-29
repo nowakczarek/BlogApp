@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogApp.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240728172855_Add-Migration SetupDatabase")]
-    partial class SetupDatabase
+    [Migration("20240729235037_SetupFixedDatabase")]
+    partial class SetupFixedDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -105,8 +105,8 @@ namespace BlogApp.Web.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f9da3636-ea1a-455c-bbf9-561eb4f65917",
-                            CreatedAt = new DateTime(2024, 7, 28, 19, 28, 54, 364, DateTimeKind.Local).AddTicks(3286),
+                            ConcurrencyStamp = "657111fc-d396-4a35-80af-207cb4eeb02e",
+                            CreatedAt = new DateTime(2024, 7, 30, 1, 50, 36, 964, DateTimeKind.Local).AddTicks(310),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -114,9 +114,9 @@ namespace BlogApp.Web.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGcgqukCduKUaYlqFm+o1Vw6Mj/di0D6GtylXzrjtZV/g08YxVIPTE4Yhi53PEIkXw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAS+Wu1aQZrRAcbrWT9JJZzcQBgJoFNleUgzQLpVSGgWGlJZXnTTTHL0zzStezH4KA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a6735253-cb81-40fc-bcac-c73ea3fc1fd1",
+                            SecurityStamp = "773ba4cd-a733-484a-a362-d96ab49326db",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -124,8 +124,8 @@ namespace BlogApp.Web.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "bd5ae370-9832-4b85-849f-ceb8fed230e0",
-                            CreatedAt = new DateTime(2024, 7, 28, 19, 28, 54, 434, DateTimeKind.Local).AddTicks(8164),
+                            ConcurrencyStamp = "cc420357-0ef0-464f-bed0-a76c35ddf9f4",
+                            CreatedAt = new DateTime(2024, 7, 30, 1, 50, 37, 34, DateTimeKind.Local).AddTicks(6490),
                             Email = "client@client.com",
                             EmailConfirmed = true,
                             FirstName = "Client",
@@ -133,12 +133,43 @@ namespace BlogApp.Web.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CLIENT@CLIENT.com",
                             NormalizedUserName = "CLIENT@CLIENT.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPeuGb/CR4QtwwZU4uaGGwaslwvyMIY+2epCSfW2uJyjFkbcLnMy+zXVTQ9oRfLC7w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEAglgWypVoPJ2WHsZkodlhs3ugUroIH9hjokmWPynv6pdQZFKOFkfOHJuMYJ0oPeeA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "80ae2dfc-9ddd-45c1-a389-61473534cd06",
+                            SecurityStamp = "22d666b6-b8bc-47fb-be06-062a5032437a",
                             TwoFactorEnabled = false,
                             UserName = "client@client.com"
                         });
+                });
+
+            modelBuilder.Entity("BlogApp.Web.Models.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<int>("WebPostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
+
+                    b.HasIndex("WebPostId");
+
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
@@ -150,7 +181,6 @@ namespace BlogApp.Web.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ApplicationUserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Contents")
@@ -166,6 +196,32 @@ namespace BlogApp.Web.Migrations
                     b.HasIndex("ApplicationUserId");
 
                     b.ToTable("WebPosts");
+                });
+
+            modelBuilder.Entity("BlogApp.Web.Models.WebPostChangesHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Contents")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("DateTimeOfPost")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WebPostId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("WebPostId");
+
+                    b.ToTable("WebPostsChangesHistory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -197,13 +253,13 @@ namespace BlogApp.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "629b03c6-414b-45be-a30e-fdacb5510cf1",
+                            Id = "26334e78-b140-40a8-a1f8-7378e114333a",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "d59fa1fb-d658-413d-b81e-5ae9c73fea47",
+                            Id = "b51ad18c-b2a8-47ea-b7dc-455925eb1a1f",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -301,12 +357,12 @@ namespace BlogApp.Web.Migrations
                         new
                         {
                             UserId = "1",
-                            RoleId = "629b03c6-414b-45be-a30e-fdacb5510cf1"
+                            RoleId = "26334e78-b140-40a8-a1f8-7378e114333a"
                         },
                         new
                         {
                             UserId = "2",
-                            RoleId = "d59fa1fb-d658-413d-b81e-5ae9c73fea47"
+                            RoleId = "b51ad18c-b2a8-47ea-b7dc-455925eb1a1f"
                         });
                 });
 
@@ -331,15 +387,41 @@ namespace BlogApp.Web.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
+            modelBuilder.Entity("BlogApp.Web.Models.Comment", b =>
                 {
                     b.HasOne("BlogApp.Web.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("WebPosts")
-                        .HasForeignKey("ApplicationUserId")
+                        .WithMany("Comments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("BlogApp.Web.Models.WebPost", "WebPost")
+                        .WithMany("Comments")
+                        .HasForeignKey("WebPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApplicationUser");
+
+                    b.Navigation("WebPost");
+                });
+
+            modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
+                {
+                    b.HasOne("BlogApp.Web.Models.ApplicationUser", "ApplicationUser")
+                        .WithMany("WebPosts")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
+                });
+
+            modelBuilder.Entity("BlogApp.Web.Models.WebPostChangesHistory", b =>
+                {
+                    b.HasOne("BlogApp.Web.Models.WebPost", "WebPost")
+                        .WithMany("ChangesHistories")
+                        .HasForeignKey("WebPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WebPost");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -395,7 +477,16 @@ namespace BlogApp.Web.Migrations
 
             modelBuilder.Entity("BlogApp.Web.Models.ApplicationUser", b =>
                 {
+                    b.Navigation("Comments");
+
                     b.Navigation("WebPosts");
+                });
+
+            modelBuilder.Entity("BlogApp.Web.Models.WebPost", b =>
+                {
+                    b.Navigation("ChangesHistories");
+
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

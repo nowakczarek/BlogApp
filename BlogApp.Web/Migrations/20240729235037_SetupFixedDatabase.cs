@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace BlogApp.Web.Migrations
 {
     /// <inheritdoc />
-    public partial class SetupDatabase : Migration
+    public partial class SetupFixedDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -169,7 +169,7 @@ namespace BlogApp.Web.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Contents = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     DateTimeOfPost = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -178,6 +178,53 @@ namespace BlogApp.Web.Migrations
                         name: "FK_WebPosts_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comment",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WebPostId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comment", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comment_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comment_WebPosts_WebPostId",
+                        column: x => x.WebPostId,
+                        principalTable: "WebPosts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "WebPostsChangesHistory",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Contents = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    DateTimeOfPost = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    WebPostId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebPostsChangesHistory", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_WebPostsChangesHistory_WebPosts_WebPostId",
+                        column: x => x.WebPostId,
+                        principalTable: "WebPosts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -187,8 +234,8 @@ namespace BlogApp.Web.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "629b03c6-414b-45be-a30e-fdacb5510cf1", null, "admin", "admin" },
-                    { "d59fa1fb-d658-413d-b81e-5ae9c73fea47", null, "client", "client" }
+                    { "26334e78-b140-40a8-a1f8-7378e114333a", null, "admin", "admin" },
+                    { "b51ad18c-b2a8-47ea-b7dc-455925eb1a1f", null, "client", "client" }
                 });
 
             migrationBuilder.InsertData(
@@ -196,8 +243,8 @@ namespace BlogApp.Web.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreatedAt", "Email", "EmailConfirmed", "FirstName", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "f9da3636-ea1a-455c-bbf9-561eb4f65917", new DateTime(2024, 7, 28, 19, 28, 54, 364, DateTimeKind.Local).AddTicks(3286), "admin@admin.com", true, "Admin", "User", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEGcgqukCduKUaYlqFm+o1Vw6Mj/di0D6GtylXzrjtZV/g08YxVIPTE4Yhi53PEIkXw==", null, false, "a6735253-cb81-40fc-bcac-c73ea3fc1fd1", false, "admin@admin.com" },
-                    { "2", 0, "bd5ae370-9832-4b85-849f-ceb8fed230e0", new DateTime(2024, 7, 28, 19, 28, 54, 434, DateTimeKind.Local).AddTicks(8164), "client@client.com", true, "Client", "User", false, null, "CLIENT@CLIENT.com", "CLIENT@CLIENT.COM", "AQAAAAIAAYagAAAAEPeuGb/CR4QtwwZU4uaGGwaslwvyMIY+2epCSfW2uJyjFkbcLnMy+zXVTQ9oRfLC7w==", null, false, "80ae2dfc-9ddd-45c1-a389-61473534cd06", false, "client@client.com" }
+                    { "1", 0, "657111fc-d396-4a35-80af-207cb4eeb02e", new DateTime(2024, 7, 30, 1, 50, 36, 964, DateTimeKind.Local).AddTicks(310), "admin@admin.com", true, "Admin", "User", false, null, "ADMIN@ADMIN.COM", "ADMIN@ADMIN.COM", "AQAAAAIAAYagAAAAEAS+Wu1aQZrRAcbrWT9JJZzcQBgJoFNleUgzQLpVSGgWGlJZXnTTTHL0zzStezH4KA==", null, false, "773ba4cd-a733-484a-a362-d96ab49326db", false, "admin@admin.com" },
+                    { "2", 0, "cc420357-0ef0-464f-bed0-a76c35ddf9f4", new DateTime(2024, 7, 30, 1, 50, 37, 34, DateTimeKind.Local).AddTicks(6490), "client@client.com", true, "Client", "User", false, null, "CLIENT@CLIENT.com", "CLIENT@CLIENT.COM", "AQAAAAIAAYagAAAAEAglgWypVoPJ2WHsZkodlhs3ugUroIH9hjokmWPynv6pdQZFKOFkfOHJuMYJ0oPeeA==", null, false, "22d666b6-b8bc-47fb-be06-062a5032437a", false, "client@client.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -205,8 +252,8 @@ namespace BlogApp.Web.Migrations
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
-                    { "629b03c6-414b-45be-a30e-fdacb5510cf1", "1" },
-                    { "d59fa1fb-d658-413d-b81e-5ae9c73fea47", "2" }
+                    { "26334e78-b140-40a8-a1f8-7378e114333a", "1" },
+                    { "b51ad18c-b2a8-47ea-b7dc-455925eb1a1f", "2" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -249,9 +296,24 @@ namespace BlogApp.Web.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Comment_ApplicationUserId",
+                table: "Comment",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comment_WebPostId",
+                table: "Comment",
+                column: "WebPostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_WebPosts_ApplicationUserId",
                 table: "WebPosts",
                 column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_WebPostsChangesHistory_WebPostId",
+                table: "WebPostsChangesHistory",
+                column: "WebPostId");
         }
 
         /// <inheritdoc />
@@ -273,10 +335,16 @@ namespace BlogApp.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "WebPosts");
+                name: "Comment");
+
+            migrationBuilder.DropTable(
+                name: "WebPostsChangesHistory");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "WebPosts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

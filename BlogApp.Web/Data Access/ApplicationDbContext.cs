@@ -9,7 +9,7 @@ namespace BlogApp.Web.Data_Access
     {
         public ApplicationDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         public DbSet<WebPost> WebPosts { get; set; }

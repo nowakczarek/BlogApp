@@ -15,9 +15,11 @@ namespace BlogApp.Web.Models
         public DateTime DateTimeOfPost { get; set; } = DateTime.Now;
 
         [ForeignKey("ApplicationUser")]
-        public string ApplicationUserId { get; set; }
-        [Required]
+        public string? ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
-        public List<WebPostChangesHistory> WebPostsChangeHistory { get; set; } = new List<WebPostChangesHistory>();
+
+        public List<Comment> Comments { get; set; } = new List<Comment>();
+        public List<WebPostChangesHistory> ChangesHistories { get; set; } = new List<WebPostChangesHistory>();
+
     }
 }
