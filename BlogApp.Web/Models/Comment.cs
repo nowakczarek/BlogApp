@@ -11,7 +11,7 @@ namespace BlogApp.Web.Models
         [StringLength(1000)]
         public string Text { get; set; }
         [Required]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [ForeignKey("WebPost")]
         public int WebPostId { get; set; }
