@@ -20,12 +20,17 @@ namespace BlogApp.Web.Pages
 
         public List<WebPost> WebPosts { get; set; }
 
+        public List<Comment> Comments { get; set; }
+
         [BindProperty]
         public WebPost WebPost { get; set; }
 
+        [BindProperty]
+        public Comment Comment { get; set; }
+
         public ApplicationUser CurrentUser { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAddWebPostAsync()
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -37,14 +42,31 @@ namespace BlogApp.Web.Pages
             return RedirectToPage();
         }
 
-        public async Task OnGet()
+        public async Task<IActionResult> OnPostAddCommentAsync(int webPostId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var webPost = await _context.WebPosts.FindAsync(webPostId);
+
+            Comment.ApplicationUserId = user.Id;
+            Comment.WebPostId = webPost.Id;
+
+            _context.Comments.Add(Comment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage();
+        }
+
+        public async Task OnGetAsync(int id)
         {
             WebPosts = await _context.WebPosts
             .Include(wp => wp.ApplicationUser)
+            .Include(wp => wp.Comments)
+                .ThenInclude(c => c.ApplicationUser)
             .OrderByDescending(wp => wp.DateTimeOfPost)
             .ToListAsync();
 
             CurrentUser = await _userManager.GetUserAsync(User);
+
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)

@@ -12,7 +12,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <form method ="post">
+    <form method="post" asp-page-handler="AddWebPost">
         <div class="form-group">
             <p>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</p>
             <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
@@ -41,13 +41,40 @@
                         <td>@post.DateTimeOfPost</td>
                         <td>
                             <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
-                        @if(post.ApplicationUserId == Model.CurrentUser.Id)
-                        {
-                            <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
-                        }
+                            @if(post.ApplicationUserId == Model.CurrentUser.Id)
+                            {
+                                <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
+                            }
                         
                             <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
                                 <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Comments:</strong>
+                            <ul>
+                                @foreach (var comment in post.Comments)
+                                {
+                                    <li>
+                                        <p>@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName: @comment.Text</p>
+                                        <small>@comment.CreatedAt</small>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form method="post" asp-page-handler="AddComment">
+                                <input type="hidden" name="webPostId" value="@post.Id" />
+                                <div>
+                                    <textarea asp-for="Comment.Text" class="form-control"></textarea>
+                                    <span asp-validation-for="Comment.Text" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add comment</button>
                             </form>
                         </td>
                     </tr>
@@ -70,6 +97,32 @@
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                         }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Comments:</strong>
+                            <ul>
+                                @foreach (var comment in post.Comments)
+                                {
+                                    <li>
+                                        <p>@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName: @comment.Text</p>
+                                        <small>@comment.CreatedAt</small>
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <form method="post" asp-page-handler="AddComment">
+                                <input type="hidden" name="webPostId" value="@post.Id" />
+                                <div>
+                                    <textarea asp-for="Comment.Text" class="form-control"></textarea>
+                                    <span asp-validation-for="Comment.Text" class="text-danger"></span>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Add comment</button>
+                            </form>
                         </td>
                     </tr>
                 }
