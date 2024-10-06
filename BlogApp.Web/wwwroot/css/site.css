@@ -18,5 +18,84 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.whole-post {
+    padding: 1rem;
+    border: 2px;
+    border-radius: 15px;
+    background-color: lightgray;
+}
+
+.add-post{
+    margin-bottom: 2rem;
+}
+
+.add-post-button {
+    float: right;
+}
+
+
+.first-row {
+    display: flow-root;
+    margin: 2rem;
+}
+
+.first-row h3 {
+    float: left;
+}
+
+.first-row p {
+    float: right;
+}
+
+.middle-row {
+    display: flow-root;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.contents-of-post{
+    float:left;
+    width: 50%;
+}
+
+.buttons-row {
+    display: flex;
+    justify-content: right;
+    width: 50%;
+}
+
+.comments-section {
+    margin: 2rem;
+}
+
+.comment {
+    padding: 0 0 1rem 0;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.add-comment-container {
+    display: flex;
+    align-items: flex-start;
+    margin: 2rem;
+    gap: 10px
+}
+
+.add-comment-container form{
+    display: flex;
+    align-items: center;
+}
+
+.add-comment-container form textarea {
+    margin-right: 10px;
+    width: 300px
+}
+
+add-comment-container button{
+    margin-left: 10px;
 }
