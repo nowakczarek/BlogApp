@@ -48,23 +48,24 @@ body {
 
 .first-row p {
     float: right;
+    font-weight: bold;
 }
 
 .middle-row {
     display: flow-root;
-    text-align: center;
     margin-bottom: 1rem;
 }
 
 .contents-of-post{
     float:left;
-    width: 50%;
+    width: 60%;
+    padding: 2rem;
 }
 
 .buttons-row {
     display: flex;
     justify-content: right;
-    width: 50%;
+    width: 40%;
 }
 
 .comments-section {
