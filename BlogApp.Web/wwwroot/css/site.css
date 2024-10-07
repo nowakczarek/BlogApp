@@ -19,21 +19,48 @@ html {
 
 body {
     margin-bottom: 60px;
+    background-color: rgb(43, 40, 40);
+    color: white;
+}
+
+footer {
+    background-color: white;
+    color: black;
+}
+
+.btn-primary {
+    background-color: rgb(43, 40, 40);
+    border: none;
 }
 
 .whole-post {
     padding: 1rem;
+    margin: 0 auto;
     border: 2px;
     border-radius: 15px;
-    background-color: lightgray;
+    background-color: rgb(66, 64, 64);
+    box-shadow: 0px 4px 6px rgb(163, 163, 163);
+    width: 70%;
 }
 
-.add-post{
+.add-post {
     margin-bottom: 2rem;
+    text-align: center;
+}
+
+.add-post form {
+    width: 800px;
+    display: inline-block;
+}
+
+.add-post textarea {
+    height: 200px;
 }
 
 .add-post-button {
     float: right;
+    background-color: rgb(66, 64, 64);
+    border: none;
 }
 
 
@@ -60,6 +87,10 @@ body {
     float: left;
     width: 60%;
     padding: 2rem;
+}
+
+.contents-of-post img {
+    padding-top: 1rem;
 }
 
 .buttons-row {
@@ -99,4 +130,8 @@ body {
 
 add-comment-container button{
     margin-left: 10px;
+}
+
+.form-control {
+    color: rgb(43, 40, 40);
 }
