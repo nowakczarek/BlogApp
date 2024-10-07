@@ -13,11 +13,15 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="add-post">
-        <form method="post" asp-page-handler="AddWebPost">
+        <form method="post" asp-page-handler="AddWebPost" enctype="multipart/form-data">
             <div class="form-group">
                 <p><strong>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</strong></p>
                 <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
                 <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
+            </div>
+            <div>
+                <label for="Image">Upload Image</label>
+                <input type="file" class="form-control" id="Image" name="Image" />
             </div>
             <br />
             <button type="submit" class="btn btn-primary add-post-button">Add Post</button>
@@ -25,109 +29,113 @@
     </div>
     <br />
 
-            @if (User.IsInRole("admin"))
+        @if (User.IsInRole("admin"))
+        {
+            @foreach (var post in Model.WebPosts)
             {
-                @foreach (var post in Model.WebPosts)
-                {
 
-                    <div class="whole-post">
-                        <div class="first-row">
-                            <h3>
-                                @post.ApplicationUser.FirstName @post.ApplicationUser.LastName
-                            </h3>
-                            <p>
-                                @post.DateTimeOfPost
-                            </p>
-                        </div>
-                        <div class="middle-row">
-                            <div class="contents-of-post">
-                                @post.Contents
-                            </div>
-                            <div class="buttons-row">
-                                <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
-                                @if (post.ApplicationUserId == Model.CurrentUser.Id)
-                                {
-                                    <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
-                                }
-                                <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="comments-section">
-                            @foreach (var comment in post.Comments)
+                <div class="whole-post">
+                    <div class="first-row">
+                        <h3>
+                            @post.ApplicationUser.FirstName @post.ApplicationUser.LastName
+                        </h3>
+                        <p>
+                            @post.DateTimeOfPost
+                        </p>
+                    </div>
+                    <div class="middle-row">
+                        <div class="contents-of-post">
+                            @post.Contents
+                            @if (!string.IsNullOrEmpty(post.ImagePath))
                             {
-                                <div class="comment">
-                                    <p>
-                                        <strong>@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName</strong>: @comment.Text
-                                    </p>
-                                    <small>@comment.CreatedAt</small>
-                                </div>
+                                <img src="@post.ImagePath" alt="Post Image" class="img-fluid" />
                             }
                         </div>
-                        <div class="add-comment-container">
-                            <form method="post" asp-page-handler="AddComment">
-                                <input type="hidden" name="webPostId" value="@post.Id" />
-                                <div class="add-comment-form">
-                                    <textarea asp-for="Comment.Text" class="form-control"></textarea>
-                                    <span asp-validation-for="Comment.Text" class="text-danger"></span>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Add comment</button>
+                        <div class="buttons-row">
+                            <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
+                            @if (post.ApplicationUserId == Model.CurrentUser.Id)
+                            {
+                                <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
+                            }
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
+                                <button type="submit" class="btn btn-danger">Delete</button>
                             </form>
                         </div>
                     </div>
-                    <br />
-                    
-                }
-            }
-            else
-            {
-                @foreach (var post in Model.WebPosts)
-                {
-                    <tr>
-                        <td>@post.Contents</td>
-                        <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
-                        <td>@post.DateTimeOfPost</td>
-                        <td>
-                            <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
-                        @if (post.ApplicationUserId == Model.CurrentUser.Id) 
+                    <div class="comments-section">
+                        @foreach (var comment in post.Comments)
                         {
-                                <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
-                                <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                            <div class="comment">
+                                <p>
+                                    <strong>@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName</strong>: @comment.Text
+                                </p>
+                                <small>@comment.CreatedAt</small>
+                            </div>
                         }
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <strong>Comments:</strong>
-                            <ul>
-                                @foreach (var comment in post.Comments)
-                                {
-                                    <li>
-                                        <p>@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName: @comment.Text</p>
-                                        <small>@comment.CreatedAt</small>
-                                    </li>
-                                }
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <form method="post" asp-page-handler="AddComment">
-                                <input type="hidden" name="webPostId" value="@post.Id" />
-                                <div>
-                                    <textarea asp-for="Comment.Text" class="form-control"></textarea>
-                                    <span asp-validation-for="Comment.Text" class="text-danger"></span>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Add comment</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <br />
-                }
+                    </div>
+                    <div class="add-comment-container">
+                        <form method="post" asp-page-handler="AddComment">
+                            <input type="hidden" name="webPostId" value="@post.Id" />
+                            <div class="add-comment-form">
+                                <textarea asp-for="Comment.Text" class="form-control"></textarea>
+                                <span asp-validation-for="Comment.Text" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add comment</button>
+                        </form>
+                    </div>
+                </div>
+                <br />
+                    
             }
+        }
+        else
+        {
+            @foreach (var post in Model.WebPosts)
+            {
+                <tr>
+                    <td>@post.Contents</td>
+                    <td>@post.ApplicationUser.FirstName @post.ApplicationUser.LastName</td>
+                    <td>@post.DateTimeOfPost</td>
+                    <td>
+                        <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
+                    @if (post.ApplicationUserId == Model.CurrentUser.Id) 
+                    {
+                            <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
+                            <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                    }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Comments:</strong>
+                        <ul>
+                            @foreach (var comment in post.Comments)
+                            {
+                                <li>
+                                    <p>@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName: @comment.Text</p>
+                                    <small>@comment.CreatedAt</small>
+                                </li>
+                            }
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <form method="post" asp-page-handler="AddComment">
+                            <input type="hidden" name="webPostId" value="@post.Id" />
+                            <div>
+                                <textarea asp-for="Comment.Text" class="form-control"></textarea>
+                                <span asp-validation-for="Comment.Text" class="text-danger"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add comment</button>
+                        </form>
+                    </td>
+                </tr>
+                <br />
+            }
+        }
         
 }
 else

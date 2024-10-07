@@ -4,6 +4,7 @@ using BlogApp.Web.Data_Access;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlogApp.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241007155602_AddImagePathToWebPost")]
+    partial class AddImagePathToWebPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -102,8 +105,8 @@ namespace BlogApp.Web.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a5c34909-edae-46ad-a021-002900c50729",
-                            CreatedAt = new DateTime(2024, 10, 7, 19, 23, 53, 724, DateTimeKind.Local).AddTicks(8711),
+                            ConcurrencyStamp = "28e9e871-c874-4168-bef5-a114d2f900a3",
+                            CreatedAt = new DateTime(2024, 10, 7, 17, 56, 0, 967, DateTimeKind.Local).AddTicks(6105),
                             Email = "admin@admin.com",
                             EmailConfirmed = true,
                             FirstName = "Admin",
@@ -111,9 +114,9 @@ namespace BlogApp.Web.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN@ADMIN.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPQMW+slLkycZmwjQIrhjJi6WxQhY78hxs6V3rZoG474ElAEHXTRNR7Y4MIfPIzohA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBL94qJkJaqM6dzxBZAPhUUFSILRalr5y7oGYe1AvGjqPswYp8f9xRyZTfCujeNzVw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "59a49338-1a0f-4307-b516-3366fd06490b",
+                            SecurityStamp = "6ef04378-5b8f-4abb-8a1f-99354fff7a51",
                             TwoFactorEnabled = false,
                             UserName = "admin@admin.com"
                         },
@@ -121,8 +124,8 @@ namespace BlogApp.Web.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "6d6d59a2-cc28-493b-af52-821b556edfcc",
-                            CreatedAt = new DateTime(2024, 10, 7, 19, 23, 53, 796, DateTimeKind.Local).AddTicks(8133),
+                            ConcurrencyStamp = "89efebb7-143c-4f7e-bc13-dabc8d86fb9f",
+                            CreatedAt = new DateTime(2024, 10, 7, 17, 56, 1, 40, DateTimeKind.Local).AddTicks(1124),
                             Email = "client@client.com",
                             EmailConfirmed = true,
                             FirstName = "Client",
@@ -130,9 +133,9 @@ namespace BlogApp.Web.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CLIENT@CLIENT.com",
                             NormalizedUserName = "CLIENT@CLIENT.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEIt7OUBSuw1UCz15rzpXOiSx59pA3s2vq4zyYyMnnAizo3bEjD+yO34g+q8tot/NNg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBnIrpY1OLK+JsX6+b1ebGymH7qnuQD2wRaDg/LVCyTOYN52TV6Hu9ExcgoRAH0E5w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "62db570f-a686-4332-8d0e-938fb5d1ae38",
+                            SecurityStamp = "18c0c09d-2de4-4de0-ae9b-138bf28b8b73",
                             TwoFactorEnabled = false,
                             UserName = "client@client.com"
                         });
@@ -189,6 +192,7 @@ namespace BlogApp.Web.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImagePath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -253,13 +257,13 @@ namespace BlogApp.Web.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "25337307-e734-40d2-93ab-b9385095f606",
+                            Id = "863ee9bd-8e89-403c-a063-6a335693f788",
                             Name = "admin",
                             NormalizedName = "admin"
                         },
                         new
                         {
-                            Id = "3daf4fa5-071f-4383-948b-2f42b7aa9819",
+                            Id = "0ec12e3a-867f-4f29-aad9-ec942c18ab5f",
                             Name = "client",
                             NormalizedName = "client"
                         });
@@ -357,12 +361,12 @@ namespace BlogApp.Web.Migrations
                         new
                         {
                             UserId = "1",
-                            RoleId = "25337307-e734-40d2-93ab-b9385095f606"
+                            RoleId = "863ee9bd-8e89-403c-a063-6a335693f788"
                         },
                         new
                         {
                             UserId = "2",
-                            RoleId = "3daf4fa5-071f-4383-948b-2f42b7aa9819"
+                            RoleId = "0ec12e3a-867f-4f29-aad9-ec942c18ab5f"
                         });
                 });
 

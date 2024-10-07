@@ -28,14 +28,36 @@ namespace BlogApp.Web.Pages
         [BindProperty]
         public Comment Comment { get; set; }
 
+        [BindProperty]
+        public IFormFile Image { get; set; }
+
         public ApplicationUser CurrentUser { get; set; }
 
         public async Task<IActionResult> OnPostAddWebPostAsync()
         {
-
             var user = await _userManager.GetUserAsync(User);
             WebPost.ApplicationUserId = user.Id;
 
+           
+            var fileName = Path.GetFileNameWithoutExtension(Image.FileName);
+            var extension = Path.GetExtension(Image.FileName);
+            var newFileName = $"{fileName}_{DateTime.Now.Ticks}{extension}";
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads", newFileName);
+
+            if (!Directory.Exists(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads")))
+            {
+                Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/uploads"));
+            }
+
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await Image.CopyToAsync(stream);
+            }
+
+                 
+            WebPost.ImagePath = $"/uploads/{newFileName}";
+               
+            
             _context.WebPosts.Add(WebPost);
             await _context.SaveChangesAsync();
 

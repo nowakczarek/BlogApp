@@ -13,6 +13,7 @@ namespace BlogApp.Web.Models
         public string Contents { get; set; }
         [Required]
         public DateTime DateTimeOfPost { get; set; } = DateTime.Now;
+        public string? ImagePath { get; set; }
 
         [ForeignKey("ApplicationUser")]
         public string? ApplicationUserId { get; set; }
