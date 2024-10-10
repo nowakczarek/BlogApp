@@ -1,5 +1,7 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -10,11 +12,6 @@ html {
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
 }
 
 body {
@@ -44,12 +41,19 @@ footer {
 }
 
 .add-post {
-    margin-bottom: 2rem;
+    margin: 2rem;
     text-align: center;
+    padding: 1rem;
+    margin: 0 auto;
+    border: 2px;
+    border-radius: 15px;
+    background-color: rgb(66, 64, 64);
+    box-shadow: 0px 4px 6px rgb(163, 163, 163);
+    width: 70%;
 }
 
 .add-post form {
-    width: 800px;
+    width: 80%;
     display: inline-block;
 }
 
@@ -59,7 +63,6 @@ footer {
 
 .add-post-button {
     float: right;
-    background-color: rgb(66, 64, 64);
     border: none;
 }
 
@@ -81,12 +84,16 @@ footer {
 .middle-row {
     display: flow-root;
     margin-bottom: 1rem;
+    margin: 2rem;
 }
 
 .contents-of-post {
     float: left;
     width: 60%;
     padding: 2rem;
+    background-color: rgb(98, 97, 97);
+    border: 2px;
+    border-radius: 15px;
 }
 
 .contents-of-post img {
@@ -134,4 +141,49 @@ add-comment-container button{
 
 .form-control {
     color: rgb(43, 40, 40);
+}
+
+#comment-text {
+    background-color: rgb(98, 97, 97);
+    border: 2px;
+    border-radius: 25px;
+    padding: 0.3rem 0.5rem 0.3rem 0.5rem;
+}
+
+.img-section {
+    width: 100%;
+    text-align: center;
+}
+
+/* Login.cshtml */
+
+#login-submit {
+    background-color: rgb(98, 97, 97);
+}
+
+#login-container {
+    background-color: rgb(66, 64, 64);
+}
+
+#forgot-password-paragraph {
+    margin-top: 1rem;
+}
+
+.form-label {
+    color: black;
+}
+
+#remember-me{
+    color: white;
+}
+
+/* Layout pt.2*/
+
+#manage-account {
+    margin: 2rem;
+    padding: 1rem;
+    border: 2px;
+    border-radius: 15px;
+    background-color: rgb(66, 64, 64);
+    box-shadow: 0px 4px 6px rgb(163, 163, 163);
 }
