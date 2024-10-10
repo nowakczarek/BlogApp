@@ -9,3 +9,4 @@ I've also used Identity for the login functionality.
 - Registration (new account is selected as a client) and Logging
 - Updating post's contents
 - Browsing post's edit history
+- Adding photo to the post
