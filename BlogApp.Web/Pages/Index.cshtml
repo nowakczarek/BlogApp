@@ -26,10 +26,12 @@
                     }
                     <h3>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</h3>
                 </div>
-                <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
-                <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
+                <div class="textarea-margin">
+                    <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
+                    <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
+                </div>
             </div>
-            <div>
+            <div class="textarea-margin">
                 <label for="Image">Upload Image</label>
                 <input type="file" class="form-control" id="Image" name="Image" />
             </div>
