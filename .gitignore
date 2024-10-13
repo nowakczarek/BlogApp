@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /BlogApp.Web/wwwroot/uploads
+/BlogApp.Web/wwwroot/uploads/default-placeholder.jpg
+/BlogApp.Web/wwwroot/uploads/default-placeholder_638639273201736182.jpg
+/BlogApp.Web/wwwroot/uploads/stary-rock_638639273740993292.jpg
