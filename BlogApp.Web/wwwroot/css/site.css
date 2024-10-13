@@ -41,7 +41,7 @@ footer {
 }
 
 .add-post {
-    margin: 2rem;
+    /*margin: 2rem;*/
     text-align: left;
     padding: 1rem;
     margin: 0 auto;
@@ -92,7 +92,11 @@ footer {
     margin: 0;
 }
 
-.button-spacing{
+.textarea-margin{
+    margin-left: 2rem;
+}
+
+.button-spacing {
     margin-right: 0.5rem;
 }
 
@@ -228,9 +232,15 @@ add-comment-container button{
     left: 5%;
     display: flex;
     align-items: center;
+    width: 90%;
 }
 
-.inside-background h2{
+.profile-details {
+    display: flex;
+    align-items: center;
+}
+
+.inside-background h2 {
     margin: 0;
 }
 
@@ -239,4 +249,37 @@ add-comment-container button{
     background-color: rgb(66, 64, 64);
     margin-bottom: 1rem;
     border-radius: 0 0 15px 15px;
+}
+
+#edit-profile-button {
+    margin-left: auto;
+}
+
+/*Edit History*/
+
+.table{
+    color: white;
+}
+
+/*Edit Post*/
+
+#edit-post-form{
+    min-height: 150px;
+}
+
+.edit-post {
+    padding: 1rem;
+    border: 2px;
+    border-radius: 15px;
+    background-color: rgb(66, 64, 64);
+    box-shadow: 0px 4px 6px rgb(163, 163, 163);
+}
+
+#edit-button-container {
+    text-align: right;
+    margin-top: 1rem;
+}
+
+#edit-info {
+    margin-bottom: 1rem;
 }
