@@ -155,13 +155,10 @@ add-comment-container button{
     text-align: center;
 }
 
-/* Login.cshtml */
+/* Login.cshtml, Register.cshtml */
 
-#login-submit {
-    background-color: rgb(98, 97, 97);
-}
 
-#login-container {
+#box-container {
     background-color: rgb(66, 64, 64);
 }
 
@@ -176,6 +173,7 @@ add-comment-container button{
 #remember-me{
     color: white;
 }
+
 
 /* Layout pt.2*/
 
