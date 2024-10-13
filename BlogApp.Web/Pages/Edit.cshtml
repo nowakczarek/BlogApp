@@ -2,11 +2,14 @@
 @model BlogApp.Web.Pages.EditModel
 @{
 }
-<h2>Edit post @Model.WebPost.Id</h2>
-
-<form method="post" asp-page-handler="Update" asp-route-id="@Model.WebPost.Id">
-    <div class="form-group">
-        <textarea class="form-control" name="WebPost.Contents" required>@Model.WebPost.Contents</textarea>
-    </div>
-    <button type="submit" class="btn btn-primary">Update</button>
-</form>
+<div class="edit-post">
+    <form method="post" asp-page-handler="Update" asp-route-id="@Model.WebPost.Id">
+        <h2 id="edit-info">Edit Post from @Model.WebPost.DateTimeOfPost</h2>
+        <div>
+            <textarea class="form-control" name="WebPost.Contents" id="edit-post-form" required>@Model.WebPost.Contents</textarea>
+        </div>
+        <div id="edit-button-container">
+            <button type="submit" class="btn btn-primary" id="edit-confirm-button">Confirm</button>
+        </div>
+    </form>
+</div>
