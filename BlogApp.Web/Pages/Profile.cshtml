@@ -21,22 +21,53 @@
             <img src="~/uploads/background-pic-placeholder1.jpg" alt="Background Picture" id="profile-background" />
         }
         <div class="inside-background">
-            @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
-            {
-                <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" class="img-fluid" id="profile-picture" />
-            }
-            else
-            {
-                <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-picture" />
-            }
-            <h2>
-                @Model.CurrentUser.FirstName @Model.CurrentUser.LastName
-            </h2>
+            <div class="profile-details">
+                @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
+                {
+                    <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" class="img-fluid" id="profile-picture" />
+                }
+                else
+                {
+                    <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-picture" />
+                }
+                <h2>
+                    @Model.CurrentUser.FirstName @Model.CurrentUser.LastName
+                </h2>
+            </div>
+            <form asp-page="/EditProfile" id="edit-profile-button">
+                <button type="submit" class="btn btn-primary add-post-button">Edit Profile</button>
+            </form>
         </div>
     </div>
     <div class="second-profile-header">
-
+        
     </div>
+    <div class="add-post">
+        <form method="post" asp-page-handler="AddWebPost" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="person-posting-row">
+                    @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
+                    {
+                        <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" id="profile-pic-in-post" />
+                    }
+                    else
+                    {
+                        <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
+                    }
+                    <h3>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</h3>
+                </div>
+                <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
+                <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
+            </div>
+            <div>
+                <label for="Image">Upload Image</label>
+                <input type="file" class="form-control" id="Image" name="Image" />
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary add-post-button">Add Post</button>
+        </form>
+    </div>
+    <br />
     @foreach (var post in Model.WebPosts)
     {
         <div class="whole-post">
@@ -60,11 +91,11 @@
                 <div class="contents-of-post">
                     @post.Contents
                 </div>
-                <div>
-                    <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
+                <div class="buttons-row">
+                    <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary button-spacing">Edit History</a>
                     @if (post.ApplicationUserId == Model.CurrentUser.Id)
                     {
-                        <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
+                        <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary button-spacing">Edit</a>
                     }
                     @if (User.IsInRole("admin"))
                     {
