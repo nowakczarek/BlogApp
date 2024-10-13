@@ -1,0 +1,115 @@
+﻿@page
+@model BlogApp.Web.Pages.ProfileModel
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@using Microsoft.AspNetCore.Identity
+@using BlogApp.Web.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="profile-header">
+        @if(!string.IsNullOrEmpty(Model.CurrentUser.ProfileBackgroundImgPath))
+        {
+            <img src="@Model.CurrentUser.ProfileBackgroundImgPath" alt="Profile Picture" id="profile-background"/>
+        }
+        else
+        {
+            <img src="~/uploads/background-pic-placeholder1.jpg" alt="Background Picture" id="profile-background" />
+        }
+        <div class="inside-background">
+            @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
+            {
+                <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" class="img-fluid" id="profile-picture" />
+            }
+            else
+            {
+                <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-picture" />
+            }
+            <h2>
+                @Model.CurrentUser.FirstName @Model.CurrentUser.LastName
+            </h2>
+        </div>
+    </div>
+    <div class="second-profile-header">
+
+    </div>
+    @foreach (var post in Model.WebPosts)
+    {
+        <div class="whole-post">
+            <div class="person-posting-row">
+                @if (!string.IsNullOrEmpty(post.ApplicationUser.ProfileImgPath))
+                {
+                    <img src="@post.ApplicationUser.ProfileImgPath" alt="Profile Picture" id="profile-pic-in-post" />
+                }
+                else
+                {
+                    <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
+                }
+                <h3>
+                    @post.ApplicationUser.FirstName @post.ApplicationUser.LastName
+                </h3>
+                <p>
+                    @post.DateTimeOfPost
+                </p>
+            </div>
+            <div class="middle-row">
+                <div class="contents-of-post">
+                    @post.Contents
+                </div>
+                <div>
+                    <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
+                    @if (post.ApplicationUserId == Model.CurrentUser.Id)
+                    {
+                        <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
+                    }
+                    @if (User.IsInRole("admin"))
+                    {
+                        <form method="post" asp-page-handler="Delete" asp-route-id="@post.Id">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    }
+                </div>
+            </div>
+            <div class="img-section">
+                @if (!string.IsNullOrEmpty(post.ImagePath))
+                {
+                    <img src="@post.ImagePath" alt="Post Image" class="img-fluid" />
+                }
+            </div>
+            <div class="comments-section">
+                @foreach (var comment in post.Comments)
+                {
+                    <div class="comment">
+                        <p>
+                            <strong>@comment.ApplicationUser.FirstName @comment.ApplicationUser.LastName</strong>: <span id="comment-text">@comment.Text</span>
+                        </p>
+                        <small>@comment.CreatedAt</small>
+                    </div>
+                }
+            </div>
+            <div class="add-comment-container">
+                <form method="post" asp-page-handler="AddComment">
+                    <input type="hidden" name="webPostId" value="@post.Id" />
+                    <div class="add-comment-form">
+                        <textarea asp-for="Comment.Text" class="form-control"></textarea>
+                        <span asp-validation-for="Comment.Text" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Add comment</button>
+                </form>
+            </div>
+        </div>
+        <br />
+    }
+}
+else
+{
+    <div class="text-center">
+        <h3>You need to log in to see the contents</h3>
+        <p><a asp-area="Identity" asp-page="Account/Register">Register</a><p />
+        <p><a asp-area="Identity" asp-page="Account/Login">Log in</a><p />
+    </div>
+}
