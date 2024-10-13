@@ -10,3 +10,4 @@ I've also used Identity for the login functionality.
 - Updating post's contents
 - Browsing post's edit history
 - Adding photo to the post
+- Each user has its own profile page
