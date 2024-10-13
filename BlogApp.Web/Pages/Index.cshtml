@@ -15,7 +15,17 @@
     <div class="add-post">
         <form method="post" asp-page-handler="AddWebPost" enctype="multipart/form-data">
             <div class="form-group">
-                <p><strong>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</strong></p>
+                <div class="person-posting-row">
+                    @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
+                    {
+                        <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" id="profile-pic-in-post" />
+                    }
+                    else
+                    {
+                        <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
+                    }
+                    <h3>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</h3>
+                </div>
                 <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
                 <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
             </div>
@@ -31,7 +41,15 @@
     @foreach (var post in Model.WebPosts)
     {
         <div class="whole-post">
-            <div class="first-row">
+            <div class="person-posting-row">
+                @if(!string.IsNullOrEmpty(post.ApplicationUser.ProfileImgPath))
+                {
+                    <img src="@post.ApplicationUser.ProfileImgPath" alt="Profile Picture" id="profile-pic-in-post" />
+                }
+                else
+                {
+                    <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
+                }
                 <h3>
                     @post.ApplicationUser.FirstName @post.ApplicationUser.LastName
                 </h3>
@@ -44,10 +62,10 @@
                     @post.Contents
                 </div>
                 <div class="buttons-row">
-                    <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary">Edit History</a>
+                    <a asp-page="/EditHistory" asp-route-id="@post.Id" class="btn btn-primary button-spacing">Edit History</a>
                     @if (post.ApplicationUserId == Model.CurrentUser.Id)
                     {
-                        <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary">Edit</a>
+                        <a asp-page="/Edit" asp-route-id="@post.Id" class="btn btn-primary button-spacing">Edit</a>
                     }
                     @if (User.IsInRole("admin"))
                     {
