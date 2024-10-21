@@ -2,6 +2,7 @@ using BlogApp.Web.Data_Access;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using BlogApp.Web.Models;
+using System.Security.Claims;
 
 namespace BlogApp.Web
 {
@@ -38,7 +39,6 @@ namespace BlogApp.Web
 
             app.UseRouting();
 
-            app.UseAuthorization();
             app.UseAuthorization();
 
             app.MapRazorPages();

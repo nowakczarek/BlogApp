@@ -1,5 +1,33 @@
 ﻿@page
 @model BlogApp.Web.Pages.EditProfileModel
 @{
+	ViewData["Title"] = "Edit Profile";
+}
 
+@using Microsoft.AspNetCore.Identity
+@using BlogApp.Web.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div>
+        @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
+        {
+            <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" id="profile-pic-in-post" />
+        }
+        else
+        {
+            <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
+        }
+    </div>
+    
+}
+else
+{
+    <div class="text-center">
+        <h3>You need to log in to see the contents</h3>
+        <p><a asp-area="Identity" asp-page="Account/Register">Register</a><p/>
+        <p><a asp-area="Identity" asp-page="Account/Login">Log in</a><p/>
+    </div>
 }
