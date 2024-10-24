@@ -1,20 +1,21 @@
 ﻿@page
-@model BlogApp.Web.Pages.ProfileModel
+@model BlogApp.Web.Pages.OtherProfileModel
 @{
-    ViewData["Title"] = "My Profile";
+	ViewData["Title"] = "Profile";
 }
 
 @using Microsoft.AspNetCore.Identity
 @using BlogApp.Web.Models
+
 
 @inject SignInManager<ApplicationUser> SignInManager
 
 @if (SignInManager.IsSignedIn(User))
 {
     <div class="profile-header">
-        @if(!string.IsNullOrEmpty(Model.CurrentUser.ProfileBackgroundImgPath))
+        @if (!string.IsNullOrEmpty(Model.ProfileUser.ProfileBackgroundImgPath))
         {
-            <img src="@Model.CurrentUser.ProfileBackgroundImgPath" alt="Profile Picture" id="profile-background"/>
+            <img src="@Model.ProfileUser.ProfileBackgroundImgPath" alt="Profile Picture" id="profile-background" />
         }
         else
         {
@@ -22,54 +23,22 @@
         }
         <div class="inside-background">
             <div class="profile-details">
-                @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
+                @if (!string.IsNullOrEmpty(Model.ProfileUser.ProfileImgPath))
                 {
-                    <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" class="img-fluid" id="profile-picture" />
+                    <img src="@Model.ProfileUser.ProfileImgPath" alt="Profile Picture" class="img-fluid" id="profile-picture" />
                 }
                 else
                 {
                     <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-picture" />
                 }
                 <h2>
-                    @Model.CurrentUser.FirstName @Model.CurrentUser.LastName
+                    @Model.ProfileUser.FirstName @Model.ProfileUser.LastName
                 </h2>
             </div>
-            <form asp-page="/EditProfile" id="edit-profile-button">
-                <button type="submit" class="btn btn-primary add-post-button">Edit Profile</button>
-            </form>
         </div>
     </div>
     <div class="second-profile-header">
-        
-    </div>
-    <div class="add-post">
-        <form method="post" asp-page-handler="AddWebPost" enctype="multipart/form-data">
-            <div class="form-group">
-                <div class="person-posting-row">
-                    @if (!string.IsNullOrEmpty(Model.CurrentUser.ProfileImgPath))
-                    {
-                        <img src="@Model.CurrentUser.ProfileImgPath" alt="Profile Picture" id="profile-pic-in-post" />
-                    }
-                    else
-                    {
-                        <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
-                    }
-                    <h3>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</h3>
-                </div>
-                <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
-                <span asp-validation-for="WebPost.Contents" class="text-danger"></span>
-            </div>
-            <div>
-                <label for="Image">Upload Image</label>
-                <input type="file" class="form-control" id="Image" name="Image" />
-            </div>
-            <br />
-            <button type="submit" class="btn btn-primary add-post-button">Add Post</button>
-        </form>
-    </div>
-    <br />
-    <div class="flex-column">
-        <p>@Model.CurrentUser.Email</p>
+
     </div>
     @foreach (var post in Model.WebPosts)
     {

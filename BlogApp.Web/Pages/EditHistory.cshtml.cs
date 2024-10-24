@@ -17,7 +17,6 @@ namespace BlogApp.Web.Pages
         public List<WebPostChangesHistory> ChangesHistory { get; set; }
         public async Task OnGetAsync(int id)
         {
-            //var posts = await _context.WebPostsChangesHistory.FindAsync(id);
 
             ChangesHistory = await _context.WebPostsChangesHistory
                 .Where(p => p.WebPostId == id)
