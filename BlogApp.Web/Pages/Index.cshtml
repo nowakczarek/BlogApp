@@ -24,7 +24,11 @@
                     {
                         <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
                     }
-                    <h3>@Model.CurrentUser.FirstName @Model.CurrentUser.LastName</h3>
+                    <h3>
+                        <a asp-page="/Profile" class="profile-link">
+                            @Model.CurrentUser.FirstName @Model.CurrentUser.LastName
+                        </a>
+                    </h3>
                 </div>
                 <div class="textarea-margin">
                     <textarea asp-for="WebPost.Contents" class="form-control"></textarea>
@@ -52,9 +56,22 @@
                 {
                     <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" id="profile-pic-in-post" />
                 }
-                <h3>
-                    @post.ApplicationUser.FirstName @post.ApplicationUser.LastName
-                </h3>
+                @if (post.ApplicationUser.Id == Model.CurrentUser.Id)
+                {
+                    <h3>
+                        <a asp-page="/Profile" class="profile-link">
+                            @Model.CurrentUser.FirstName @Model.CurrentUser.LastName
+                        </a>
+                    </h3>
+                }
+                else
+                {
+                    <h3>
+                        <a asp-page="/OtherProfile" asp-route-id="@post.ApplicationUserId" class="profile-link">
+                            @post.ApplicationUser.FirstName @post.ApplicationUser.LastName
+                        </a>
+                    </h3>
+                }
                 <p>
                     @post.DateTimeOfPost
                 </p>

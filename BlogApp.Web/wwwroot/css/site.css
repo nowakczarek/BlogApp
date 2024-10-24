@@ -85,6 +85,17 @@ footer {
     margin: 0;
 }
 
+.profile-link {
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+}
+
+.profile-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
 .person-posting-row p {
     position: absolute;
     right: 0;
