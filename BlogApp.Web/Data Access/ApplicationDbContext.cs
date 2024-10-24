@@ -15,6 +15,7 @@ namespace BlogApp.Web.Data_Access
         public DbSet<WebPost> WebPosts { get; set; }
         public DbSet<WebPostChangesHistory> WebPostsChangesHistory { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -63,7 +64,17 @@ namespace BlogApp.Web.Data_Access
                 new IdentityUserRole<string> { UserId = client.Id, RoleId = clientRole.Id }
                 );
 
+            builder.Entity<Friendship>()
+                .HasOne(u => u.User)
+                .WithMany(fs => fs.FriendshipInitiated)
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<Friendship>()
+                .HasOne(f => f.Friend)
+                .WithMany(fs => fs.FriendshipReceived)
+                .HasForeignKey(f => f.FriendId)
+                .OnDelete(DeleteBehavior.Restrict);
 
         }
 
