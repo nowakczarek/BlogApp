@@ -1,0 +1,43 @@
+﻿@page
+@using BlogApp.Web.Models
+@using Microsoft.AspNetCore.Identity
+@model BlogApp.Web.Pages.FriendsModel
+@{
+	ViewData["Title"] = "Friends";
+}
+@inject SignInManager<ApplicationUser> SignInManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <h2>Invitations</h2>
+    <div class="friends-container">
+        @foreach (var item in Model.Friendships)
+        {
+            <div class="invitation-container">
+                <div>
+                    @if (!string.IsNullOrEmpty(item.User.ProfileImgPath))
+                    {
+                        <img src="@item.User.ProfileImgPath" alt="profile picture" class="invitation-photo-container" />
+                    }
+                    else
+                    {
+                        <img src="~/uploads/profile-picture-placeholder.png" alt="Profile Picture" class="invitation-photo-container" />
+                    }
+                </div>
+                <p>@item.User.FirstName @item.User.LastName </p>
+                <button type="submit" class="btn btn-primary">Accept invitation</button>
+            </div>
+
+        }
+    </div>
+    
+}
+else
+{
+    <div class="text-center">
+        <h3>You need to log in to see the contents</h3>
+        <p><a asp-area="Identity" asp-page="Account/Register">Register</a><p />
+        <p><a asp-area="Identity" asp-page="Account/Login">Log in</a><p />
+    </div>
+}
