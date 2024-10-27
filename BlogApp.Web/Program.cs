@@ -1,8 +1,8 @@
-using BlogApp.Web.Data_Access;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using BlogApp.Web.Models;
 using System.Security.Claims;
+using BlogApp.Web.Data;
 
 namespace BlogApp.Web
 {

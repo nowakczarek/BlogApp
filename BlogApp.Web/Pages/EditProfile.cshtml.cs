@@ -1,4 +1,4 @@
-using BlogApp.Web.Data_Access;
+using BlogApp.Web.Data;
 using BlogApp.Web.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

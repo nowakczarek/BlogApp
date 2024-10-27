@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace BlogApp.Web.Data_Access
+namespace BlogApp.Web.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
