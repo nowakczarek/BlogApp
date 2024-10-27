@@ -26,7 +26,9 @@
                     }
                 </div>
                 <p>@item.User.FirstName @item.User.LastName </p>
-                <button type="submit" class="btn btn-primary">Accept invitation</button>
+                <form method="post" asp-page-handler="AcceptFriend" asp-route-id="@item.Id">
+                    <button type="submit" class="btn btn-primary">Accept invitation</button>
+                </form>
             </div>
 
         }

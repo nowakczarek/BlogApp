@@ -35,5 +35,16 @@ namespace BlogApp.Web.Pages
                 .ToListAsync();
 
         }
+
+        public async Task<IActionResult> OnPostAcceptFriend(int id)
+        {
+            var friendship = await _context.Friendships.FindAsync(id);
+
+            friendship.FriendStatus = Enums.FriendshipStatus.Accepted;
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToPage();
+        }
     }
 }
