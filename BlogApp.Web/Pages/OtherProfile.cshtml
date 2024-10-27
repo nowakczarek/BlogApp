@@ -35,6 +35,26 @@
                     @Model.ProfileUser.FirstName @Model.ProfileUser.LastName
                 </h2>
             </div>
+            @if(Model.CurrentFriendshipStatus == null)
+            {
+                <form method="post" asp-page-handler="AddFriend">
+                    <input type="hidden" name="ProfileUserId" value="@Model.ProfileUserId" />
+                    <button type="submit" class="btn btn-primary add-post-button" id="edit-profile-button">Add Friend</button>
+                </form>
+            }
+            else if(Model.CurrentFriendshipStatus == Enums.FriendshipStatus.Requested)
+            {
+                <button type="button" class="btn btn-secondary" id="edit-profile-button" disabled>Friend Request Sent</button>
+            }
+            else if(Model.CurrentFriendshipStatus == Enums.FriendshipStatus.Accepted)
+            {
+                <button type="button" class="btn btn-secondary" id="edit-profile-button" disabled>Friends</button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-secondary" id="edit-profile-button" disabled>Can't add</button>
+            }
+
         </div>
     </div>
     <div class="second-profile-header">
