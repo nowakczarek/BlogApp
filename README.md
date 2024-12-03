@@ -1,6 +1,6 @@
 # Blog App
-This is a MVP of BlogApp I created based on ASP.NET Razor Pages using Entity Framework (code first) for the data access and SQL Server as a database.
-I've also used Identity for the login functionality.
+This is a BlogApp I created based on ASP.NET Razor Pages using Entity Framework (code first) for the data access and SQL Server as a database.
+I've also used Identity for the login functionality and added some basic CSS.
 
 # Functionality
 - Each user has its own web posts that he can manage
@@ -11,3 +11,4 @@ I've also used Identity for the login functionality.
 - Browsing post's edit history
 - Adding photo to the post
 - Each user has its own profile page
+- Adding friends functionality
